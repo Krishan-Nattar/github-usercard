@@ -3,6 +3,20 @@
            https://api.github.com/users/<your name>
 */
 
+function axiosFunction(username){
+  axios
+  .get(`https://api.github.com/users/${username}`)
+  .then(response => {
+    //response is my object
+    // console.log(response.data);
+    cardGenerator(response.data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+}
+
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -24,7 +38,13 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  "adamsrog",
+  "collisiondetection",
+  "raajnpatel",
+  "MADemery",
+  "Cerberean"
+];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -46,6 +66,60 @@ const followersArray = [];
 
 */
 
+let cardsDivOnHTML = document.querySelector(".cards");
+
+function cardGenerator(obj) {
+  let cardDiv = document.createElement("div");
+  cardDiv.classList.add("card");
+
+  let avatarImg = document.createElement("img");
+  avatarImg.src = obj.avatar_url;
+
+  let cardInfo = document.createElement("div");
+  cardInfo.classList.add("card-info");
+
+  let h3 = document.createElement("h3");
+  h3.classList.add("name");
+  h3.textContent = obj.name;
+
+  let nameP = document.createElement("p");
+  nameP.classList.add("username");
+  nameP.textContent = obj.login;
+
+  let locationP = document.createElement("p");
+  locationP.textContent = `Location: ${obj.location}`;
+
+  let profileP = document.createElement("p");
+  profileP.textContent = `Profile:`;
+
+  let profileAnchor = document.createElement("a");
+  profileAnchor.href = obj.html_url;
+
+  profileP.appendChild(profileAnchor);
+
+  let followersP = document.createElement("p");
+  followersP.textContent = obj.followers;
+
+  let followingP = document.createElement("p");
+  followingP.textContent = obj.following;
+
+  let bioP = document.createElement("p");
+  bioP.textContent = `Bio: ${obj.bio}`;
+
+  cardInfo.appendChild(h3);
+  cardInfo.appendChild(nameP);
+  cardInfo.appendChild(locationP);
+  cardInfo.appendChild(profileP);
+  cardInfo.appendChild(followersP);
+  cardInfo.appendChild(followingP);
+  cardInfo.appendChild(bioP);
+
+  cardDiv.appendChild(avatarImg);
+  cardDiv.appendChild(cardInfo);
+
+  cardsDivOnHTML.appendChild(cardDiv);
+}
+
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
@@ -53,3 +127,8 @@ const followersArray = [];
   luishrd
   bigknell
 */
+axiosFunction("krishan-nattar");
+
+followersArray.forEach((item, index, array)=>{
+  axiosFunction(item);  
+});

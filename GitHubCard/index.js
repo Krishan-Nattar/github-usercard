@@ -8,8 +8,23 @@ function axiosFunction(username){
   .get(`https://api.github.com/users/${username}`)
   .then(response => {
     //response is my object
-    // console.log(response.data);
+    console.log(response.data);
     cardGenerator(response.data);
+    // resolve(response);
+    return username;
+  })
+  .then(username =>{
+    axios.get(`https://api.github.com/users/${username}/followers`)
+    .then(response=>{
+      // console.log(response.data);
+      let friendList = response.data;
+      friendList.forEach((item)=>{
+        cardGenerator(item);
+      });
+    })
+    .catch(error=>{
+      console.log(error);
+    });
   })
   .catch(error => {
     console.log(error);
@@ -45,6 +60,8 @@ const followersArray = [
   "MADemery",
   "Cerberean"
 ];
+// This array is not used because of the stretch goal
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -106,6 +123,10 @@ function cardGenerator(obj) {
   let bioP = document.createElement("p");
   bioP.textContent = `Bio: ${obj.bio}`;
 
+  let chartImg = document.createElement('img');
+  chartImg.src = `http://ghchart.rshah.org/${obj.login}`;
+  chartImg.style.width = "100%";
+
   cardInfo.appendChild(h3);
   cardInfo.appendChild(nameP);
   cardInfo.appendChild(locationP);
@@ -113,6 +134,7 @@ function cardGenerator(obj) {
   cardInfo.appendChild(followersP);
   cardInfo.appendChild(followingP);
   cardInfo.appendChild(bioP);
+  cardInfo.appendChild(chartImg);
 
   cardDiv.appendChild(avatarImg);
   cardDiv.appendChild(cardInfo);
@@ -129,6 +151,6 @@ function cardGenerator(obj) {
 */
 axiosFunction("krishan-nattar");
 
-followersArray.forEach((item, index, array)=>{
-  axiosFunction(item);  
-});
+// followersArray.forEach((item, index, array)=>{
+//   axiosFunction(item);  
+// });

@@ -16,7 +16,6 @@ function axiosFunction(username){
   .then(username =>{
     axios.get(`https://api.github.com/users/${username}/followers`)
     .then(response=>{
-      // console.log(response.data);
       let friendList = response.data;
       friendList.forEach((item)=>{
         cardGenerator(item);

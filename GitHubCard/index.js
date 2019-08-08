@@ -8,7 +8,7 @@ function axiosFunction(username){
   .get(`https://api.github.com/users/${username}`)
   .then(response => {
     //response is my object
-    console.log(response.data);
+    // console.log(response);
     cardGenerator(response.data);
     // resolve(response);
     return username;
@@ -16,9 +16,23 @@ function axiosFunction(username){
   .then(username =>{
     axios.get(`https://api.github.com/users/${username}/followers`)
     .then(response=>{
+      // console.log(response);
       let friendList = response.data;
+
+
+
       friendList.forEach((item)=>{
-        cardGenerator(item);
+
+        console.log(item.login);
+
+                axios
+          .get(`https://api.github.com/users/${item.login}`)
+          .then(response => {
+            
+            cardGenerator(response.data);
+            
+          })
+
       });
     })
     .catch(error=>{
@@ -85,6 +99,7 @@ const followersArray = [
 let cardsDivOnHTML = document.querySelector(".cards");
 
 function cardGenerator(obj) {
+  // console.log(obj);
   let cardDiv = document.createElement("div");
   cardDiv.classList.add("card");
 

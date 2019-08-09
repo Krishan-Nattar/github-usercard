@@ -111,14 +111,15 @@ function cardGenerator(obj) {
 
   let profileAnchor = document.createElement("a");
   profileAnchor.href = obj.html_url;
+  profileAnchor.textContent = obj.login;
 
   profileP.appendChild(profileAnchor);
 
   let followersP = document.createElement("p");
-  followersP.textContent = obj.followers;
+  followersP.textContent = `Followers: ${obj.followers}`;
 
   let followingP = document.createElement("p");
-  followingP.textContent = obj.following;
+  followingP.textContent = `Following: ${obj.following}`;
 
   let bioP = document.createElement("p");
   bioP.textContent = `Bio: ${obj.bio}`;

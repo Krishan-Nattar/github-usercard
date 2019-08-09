@@ -128,6 +128,9 @@ function cardGenerator(obj) {
   chartImg.src = `http://ghchart.rshah.org/${obj.login}`;
   chartImg.style.width = "100%";
 
+
+
+
   cardInfo.appendChild(h3);
   cardInfo.appendChild(nameP);
   cardInfo.appendChild(locationP);
@@ -135,12 +138,19 @@ function cardGenerator(obj) {
   cardInfo.appendChild(followersP);
   cardInfo.appendChild(followingP);
   cardInfo.appendChild(bioP);
-  cardInfo.appendChild(chartImg);
+  // cardInfo.appendChild(chartImg);
 
-  cardDiv.appendChild(avatarImg);
-  cardDiv.appendChild(cardInfo);
+  let topWrap = document.createElement('div');
+  topWrap.classList.add('topwrap');
+  topWrap.appendChild(avatarImg)
+  topWrap.appendChild(cardInfo);
 
+  // cardDiv.appendChild(avatarImg);
+  // cardDiv.appendChild(cardInfo);
+  cardDiv.appendChild(topWrap);
+  cardDiv.appendChild(chartImg);
   cardsDivOnHTML.appendChild(cardDiv);
+  console.log(cardDiv);
 }
 
 /* List of LS Instructors Github username's: 
